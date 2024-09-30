@@ -7,8 +7,12 @@ require("mason-lspconfig").setup({
 
 local lspconfig = require("lspconfig")
 
+-- Add cmp_nvim_lsp capabilities for completion
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
 -- Setup Terraform LSP
 lspconfig.terraformls.setup({
+  capabilities = capabilities,
   on_attach = function(client, bufnr)
     -- Key mappings for Terraform LSP
     local opts = { noremap = true, silent = true }
@@ -19,8 +23,6 @@ lspconfig.terraformls.setup({
   end,
   filetypes = { "terraform", "hcl" }, -- Specify filetypes for Terraform
   root_dir = lspconfig.util.root_pattern(".terraform", ".git", "main.tf"),
-  
-  -- Enable linting by adding `settings`
   settings = {
     terraform = {
       lint = {
@@ -29,8 +31,10 @@ lspconfig.terraformls.setup({
     },
   },
 })
+
 -- Setup Pyright LSP for Python
 lspconfig.pyright.setup({
+  capabilities = capabilities, 
   on_attach = function(client, bufnr)
     print("Pyright attached to buffer " .. bufnr)
     -- Key mappings for LSP functionality

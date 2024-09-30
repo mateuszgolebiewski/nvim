@@ -12,3 +12,7 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { silent = true, noremap = true })  -- Toggle Neo-tree
 vim.keymap.set('n', '<leader>nf', ':Neotree focus<CR>', { silent = true, noremap = true })  -- Focus Neo-tree window
 vim.keymap.set('n', '<leader>nr', ':Neotree reveal<CR>', { silent = true, noremap = true }) -- Reveal current file in Neo-tree
+
+-- Key mappings for LazyGit
+vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<cr>", { desc = "Open LazyGit" })
+
