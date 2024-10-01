@@ -2,7 +2,8 @@
 require("lazy").setup({
 
   require("mateuszgolebiewski.plugins.lazygit"),
-
+  {'akinsho/toggleterm.nvim', version = "*", config = true},
+  
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -82,3 +83,4 @@ require("lazy").setup({
 })
 require("mateuszgolebiewski.plugins.completions")
 require("mateuszgolebiewski.plugins.lsp")
+require("mateuszgolebiewski.plugins.toggleterm-config")

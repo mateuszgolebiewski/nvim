@@ -1,6 +1,7 @@
 -- General Neovim settings
 vim.opt.number = true              -- Show line numbers
-vim.opt.relativenumber = true      -- Relative line numbers
+vim.opt.cursorline = true
+vim.opt.relativenumber = false      -- Relative line numbers
 vim.opt.tabstop = 2                -- Number of spaces a <Tab> counts for
 vim.opt.shiftwidth = 2             -- Number of spaces for auto-indent
 vim.opt.expandtab = true           -- Use spaces instead of tabs
