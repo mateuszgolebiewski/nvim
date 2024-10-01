@@ -11,4 +11,4 @@ vim.opt.cursorline = true          -- Highlight the current line
 vim.opt.mouse = "a"                -- Enable mouse support
 vim.opt.clipboard = "unnamedplus"  -- Use system clipboard
 vim.opt.ignorecase = true          -- Ignore case in search
-
+vim.opt.showmode = false           -- Disable showmode

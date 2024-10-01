@@ -16,6 +16,10 @@ require("lazy").setup({
       "rafamadriz/friendly-snippets",
     }
   },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
   -- Add nvim-treesitter as a plugin
   {
     "nvim-treesitter/nvim-treesitter",
@@ -84,3 +88,4 @@ require("lazy").setup({
 require("mateuszgolebiewski.plugins.completions")
 require("mateuszgolebiewski.plugins.lsp")
 require("mateuszgolebiewski.plugins.toggleterm-config")
+require("mateuszgolebiewski.plugins.lualine")
