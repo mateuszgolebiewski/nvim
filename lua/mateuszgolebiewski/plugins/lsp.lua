@@ -1,49 +1,78 @@
--- Initialize Mason and Mason-lspconfig
-require("mason").setup()
-require("mason-lspconfig").setup({
-    ensure_installed = { "terraformls", "pyright" }, -- Ensures Terraform and Python LSPs are installed
-    automatic_installation = true,
-})
+local function on_attach(client, bufnr)
+  local opts = { noremap = true, silent = true }
 
-local lspconfig = require("lspconfig")
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
+end
 
--- Add cmp_nvim_lsp capabilities for completion
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+return {
+  { "neovim/nvim-lspconfig" },
 
--- Setup Terraform LSP
-lspconfig.terraformls.setup({
-  capabilities = capabilities,
-  on_attach = function(client, bufnr)
-    -- Key mappings for Terraform LSP
-    local opts = { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", opts)
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<Cmd>lua vim.lsp.buf.references()<CR>", opts)
-  end,
-  filetypes = { "terraform", "hcl" }, -- Specify filetypes for Terraform
-  root_dir = lspconfig.util.root_pattern(".terraform", ".git", "main.tf"),
-  settings = {
-    terraform = {
-      lint = {
-        enable = true,  -- Enable linting support
-      },
-    },
+  {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    config = function()
+      require("mason").setup()
+    end,
   },
-})
 
--- Setup Pyright LSP for Python
-lspconfig.pyright.setup({
-  capabilities = capabilities, 
-  on_attach = function(client, bufnr)
-    print("Pyright attached to buffer " .. bufnr)
-    -- Key mappings for LSP functionality
-    local opts = { noremap=true, silent=true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  end,
-  filetypes = { "python" },  -- Ensure it's set for Python filetypes
-  root_dir = lspconfig.util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt"),
-})
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig", "hrsh7th/cmp-nvim-lsp" },
+    config = function()
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+      require("mason-lspconfig").setup({
+        ensure_installed = { "terraformls", "pyright", "bashls", "yamlls", "jsonls", "dockerls", "gopls", "ansiblels" },
+        automatic_installation = true,
+      })
+
+      lspconfig.terraformls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        filetypes = { "terraform", "hcl" },
+        root_dir = lspconfig.util.root_pattern("tf"),
+        settings = {
+          terraform = {
+            lint = {
+              enable = true,
+            },
+          },
+        },
+      })
+
+      lspconfig.pyright.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        filetypes = { "python" },
+        root_dir = lspconfig.util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt"),
+      })
+
+      lspconfig.bashls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = { "sh" },
+      })
+    end,
+  },
+
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        filetypes = { "go", "gomod" },
+        root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+          },
+        },
+      })
+    end,
+  },
+}

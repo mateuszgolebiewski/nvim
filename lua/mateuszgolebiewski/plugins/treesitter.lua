@@ -1,11 +1,16 @@
-require("nvim-treesitter.configs").setup({
-  ensure_installed = { "python", "hcl", "bash" }, -- Install Tree-sitter parsers for Python, Terraform (hcl), and Bash
-  highlight = {
-    enable = true,               -- Enable Tree-sitter syntax highlighting
-    additional_vim_regex_highlighting = false,  -- Disable Vim's regex highlighting for performance
-  },
-  indent = {
-    enable = true,               -- Enable Tree-sitter-based indentation
-  },
-})
-
+return {
+  "nvim-treesitter/nvim-treesitter",
+  run = ":TSUpdate",
+  config = function()
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = { "terraform", "bash", "python", "javascript", "typescript", "go", "hcl" },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      indent = {
+        enable = true,
+      },
+    })
+  end,
+}

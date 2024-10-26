@@ -1,7 +1,5 @@
--- Load settings and keymaps
 require("mateuszgolebiewski.settings.options")
 
--- Install lazy.nvim if not already installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -15,7 +13,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Load plugins from mateuszgolebiewski/plugins/init.lua
 require("mateuszgolebiewski.plugins.init")
 require("mateuszgolebiewski.settings.keymaps")
 
