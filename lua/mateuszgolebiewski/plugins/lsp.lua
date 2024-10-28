@@ -30,7 +30,6 @@ return {
         automatic_installation = true,
       })
 
-      -- Terraform LSP
       lspconfig.terraformls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
@@ -45,7 +44,6 @@ return {
         },
       })
 
-      -- Python LSP
       lspconfig.pyright.setup({
         capabilities = capabilities,
         on_attach = on_attach,
@@ -53,19 +51,17 @@ return {
         root_dir = lspconfig.util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt"),
       })
 
-      -- Bash LSP
       lspconfig.bashls.setup({
         on_attach = on_attach,
         capabilities = capabilities,
         filetypes = { "sh" },
       })
 
-      -- Go LSP
       lspconfig.gopls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
-        filetypes = { "go", "gomod" },
-        root_dir = lspconfig.util.root_pattern("go.mod", ".git"),
+        filetypes = { "go", "gomod", "gowork", "gotmpl"},
+        root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
         settings = {
           gopls = {
             analyses = {

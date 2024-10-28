@@ -1,11 +1,10 @@
--- Setup plugins using lazy.nvim
 require("lazy").setup({
-
   require("mateuszgolebiewski.plugins.lazygit"),
   require("mateuszgolebiewski.plugins.treesitter"),
   require("mateuszgolebiewski.plugins.toggleterm-config"),
   require("mateuszgolebiewski.plugins.ui"),
   require("mateuszgolebiewski.plugins.lsp"),
+  require("mateuszgolebiewski.plugins.formatting"),
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -38,4 +37,3 @@ require("lazy").setup({
 require("mateuszgolebiewski.plugins.cmp")
 require("mateuszgolebiewski.plugins.toggleterm-config")
 require("mateuszgolebiewski.plugins.lualine")
-require("mateuszgolebiewski.plugins.formatting")
