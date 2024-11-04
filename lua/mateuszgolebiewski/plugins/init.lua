@@ -5,6 +5,7 @@ require("lazy").setup({
   require("mateuszgolebiewski.plugins.ui"),
   require("mateuszgolebiewski.plugins.lsp"),
   require("mateuszgolebiewski.plugins.formatting"),
+  require("mateuszgolebiewski.plugins.barbar"),
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
